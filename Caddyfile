@@ -1,8 +1,8 @@
-# Autobus platform — single Caddy entrypoint
+# Viin platform — single Caddy entrypoint
 # Container DNS names must match container_name in each compose stack.
 
-api.useautobus.com {
-	reverse_proxy autobus_backend:8000 {
+api.useviin.com {
+	reverse_proxy viin_backend:8000 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
 		header_up X-Real-IP {remote}
@@ -14,8 +14,8 @@ api.useautobus.com {
 	}
 }
 
-useautobus.com, www.useautobus.com {
-	reverse_proxy autobus_web:80 {
+useviin.com, www.useviin.com {
+	reverse_proxy viin_web:80 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
 		header_up X-Real-IP {remote}
@@ -27,7 +27,7 @@ useautobus.com, www.useautobus.com {
 	}
 }
 
-chatwoot.useautobus.com {
+chatwoot.useviin.com {
 	reverse_proxy chatwoot_rails:3000 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
@@ -40,7 +40,7 @@ chatwoot.useautobus.com {
 	}
 }
 
-postiz.useautobus.com {
+postiz.useviin.com {
 	reverse_proxy postiz:5000 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
@@ -53,7 +53,7 @@ postiz.useautobus.com {
 	}
 }
 
-rag.useautobus.com {
+rag.useviin.com {
 	reverse_proxy greenbrain_rag_api:8088 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
@@ -66,8 +66,8 @@ rag.useautobus.com {
 	}
 }
 
-portainer.useautobus.com {
-	reverse_proxy https://autobus_portainer:9443 {
+portainer.useviin.com {
+	reverse_proxy https://viin_portainer:9443 {
 		transport http {
 			tls_insecure_skip_verify
 		}
