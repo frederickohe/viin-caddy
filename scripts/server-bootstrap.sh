@@ -9,13 +9,9 @@ WWW_ROOT="/var/www"
 GITHUB_ORG="${GITHUB_ORG:-frederickohe}"
 
 REPOS=(
-  viin
+  viin-backend
   viin-web
   viin-caddy
-  viin-rag
-  qdrant
-  chatwoot-docker-compose
-  postiz-docker-compose
 )
 
 log() { echo "[bootstrap] $*"; }
@@ -34,14 +30,12 @@ install_docker() {
 }
 
 create_networks() {
-  for net in caddy greenbrain_rag; do
-    if docker network inspect "$net" >/dev/null 2>&1; then
-      log "Network '$net' exists"
-    else
-      docker network create "$net"
-      log "Created network '$net'"
-    fi
-  done
+  if docker network inspect caddy >/dev/null 2>&1; then
+    log "Network 'caddy' exists"
+  else
+    docker network create caddy
+    log "Created network 'caddy'"
+  fi
 }
 
 setup_deploy_key() {
@@ -73,14 +67,6 @@ clone_repos() {
 }
 
 prepare_env_files() {
-  if [ -f "$WWW_ROOT/viin-rag/.env.example" ] && [ ! -f "$WWW_ROOT/viin-rag/.env" ]; then
-    cp "$WWW_ROOT/viin-rag/.env.example" "$WWW_ROOT/viin-rag/.env"
-    log "Created viin-rag/.env from example — set RAG_API_KEY"
-  fi
-  if [ -f "$WWW_ROOT/chatwoot-docker-compose/.env.example" ] && [ ! -f "$WWW_ROOT/chatwoot-docker-compose/.env" ]; then
-    cp "$WWW_ROOT/chatwoot-docker-compose/.env.example" "$WWW_ROOT/chatwoot-docker-compose/.env"
-    log "Created chatwoot .env from example — set SECRET_KEY_BASE and REDIS_PASSWORD"
-  fi
   if [ -f "$WWW_ROOT/viin-web/.env.example" ] && [ ! -f "$WWW_ROOT/viin-web/.env" ]; then
     cp "$WWW_ROOT/viin-web/.env.example" "$WWW_ROOT/viin-web/.env"
     log "Created viin-web/.env from example"
@@ -104,5 +90,5 @@ log "Bootstrap complete."
 log "Next steps:"
 log "  1. Add deploy key to each GitHub repo (Settings → Deploy keys)"
 log "  2. Add GitHub secrets: VPS_HOST, VPS_USER=root, VPS_SSH_KEY"
-log "  3. Configure .env files on the server for viin, chatwoot, viin-rag"
+log "  3. Configure .env files on the server for viin-backend and viin-web"
 log "  4. Run: bash $WWW_ROOT/viin-caddy/scripts/server-bootstrap-deploy.sh"

@@ -1,7 +1,7 @@
 # Viin platform — single Caddy entrypoint
 # Container DNS names must match container_name in each compose stack.
 
-api.useviin.com {
+api.viin.app {
 	reverse_proxy viin_backend:8000 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
@@ -14,7 +14,7 @@ api.useviin.com {
 	}
 }
 
-useviin.com, www.useviin.com {
+viin.app, www.viin.app {
 	reverse_proxy viin_web:80 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
@@ -27,46 +27,7 @@ useviin.com, www.useviin.com {
 	}
 }
 
-chatwoot.useviin.com {
-	reverse_proxy chatwoot_rails:3000 {
-		header_up Host {host}
-		header_up X-Forwarded-Proto {scheme}
-		header_up X-Real-IP {remote}
-		header_up X-Forwarded-For {remote}
-	}
-
-	request_body {
-		max_size 50MB
-	}
-}
-
-postiz.useviin.com {
-	reverse_proxy postiz:5000 {
-		header_up Host {host}
-		header_up X-Forwarded-Proto {scheme}
-		header_up X-Real-IP {remote}
-		header_up X-Forwarded-For {remote}
-	}
-
-	request_body {
-		max_size 50MB
-	}
-}
-
-rag.useviin.com {
-	reverse_proxy greenbrain_rag_api:8088 {
-		header_up Host {host}
-		header_up X-Forwarded-Proto {scheme}
-		header_up X-Real-IP {remote}
-		header_up X-Forwarded-For {remote}
-	}
-
-	request_body {
-		max_size 10MB
-	}
-}
-
-portainer.useviin.com {
+portainer.viin.app {
 	reverse_proxy https://viin_portainer:9443 {
 		transport http {
 			tls_insecure_skip_verify
