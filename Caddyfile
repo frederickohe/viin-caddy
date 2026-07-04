@@ -26,15 +26,3 @@ viin.app, www.viin.app {
 		max_size 50MB
 	}
 }
-
-portainer.viin.app {
-	reverse_proxy https://viin_portainer:9443 {
-		transport http {
-			tls_insecure_skip_verify
-		}
-		header_up Host {host}
-		header_up X-Forwarded-Proto {scheme}
-		header_up X-Real-IP {remote}
-		header_up X-Forwarded-For {remote}
-	}
-}
