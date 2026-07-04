@@ -19,4 +19,6 @@ jobs:
           script: |
             set -e
             cd /var/www/viin-caddy
+            SHARED_CADDY_DIR=/var/www/memappcaddy \
+            SHARED_CADDY_CONTAINER=memapp-caddy \
             bash scripts/deploy.sh
