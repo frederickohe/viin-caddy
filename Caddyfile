@@ -26,3 +26,16 @@ task.viin.app {
 		max_size 50MB
 	}
 }
+
+db.viin.app {
+	reverse_proxy viin_pgadmin:80 {
+		header_up Host {host}
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+	}
+
+	request_body {
+		max_size 50MB
+	}
+}
