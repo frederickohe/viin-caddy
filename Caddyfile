@@ -14,7 +14,7 @@ api.viin.app {
 	}
 }
 
-viin.app, www.viin.app {
+task.viin.app {
 	reverse_proxy viin_web:80 {
 		header_up Host {host}
 		header_up X-Forwarded-Proto {scheme}
